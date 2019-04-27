@@ -267,3 +267,31 @@ client.on("message", message => {
     }
   }
 })
+
+client.on('message', (message) => {
+  const goulagcommand = prefix + 'gogoulag'
+
+  if(message.content.startsWith(goulagcommand)){
+    if(!message.member.roles.some(r=>["⚒️Staff"].includes(r.name)) )
+      return message.reply("Tu n'a pas la permission !");
+
+    let role = message.guild.roles.find(r => r.name === "🛂 𝚂𝚎́𝚓𝚘𝚞𝚛𝚗𝚎 𝚍𝚊𝚗𝚜 𝚕𝚎 𝙶𝚘𝚞𝚕𝚊𝚐");
+    let member = message.mentions.members.first();
+    member.addRole(role).catch(console.error);
+      return message.channel.send(`${member} à été envoyer au goulag par ${message.author}`)
+  }
+});
+
+client.on('message', (message) => {
+  const exitgoulagcommand = prefix + 'exitgoulag'
+
+  if(message.content.startsWith(exitgoulagcommand)){
+    if(!message.member.roles.some(r=>["⚒️Staff"].includes(r.name)) )
+      return message.reply("Tu n'a pas la permission !");
+
+    let role = message.guild.roles.find(r => r.name === "🛂 𝚂𝚎́𝚓𝚘𝚞𝚛𝚗𝚎 𝚍𝚊𝚗𝚜 𝚕𝚎 𝙶𝚘𝚞𝚕𝚊𝚐");
+    let member = message.mentions.members.first();
+    member.removeRole(role).catch(console.error);
+      return message.channel.send(`${member} à été sortit du goulag par ${message.author}`)
+  }
+});
