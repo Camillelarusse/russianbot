@@ -1,10 +1,9 @@
 const botprefix = require('./config.json');
 const prefix = (botprefix.prefix);
 const Discord = require('discord.js');
-const botToken = require('./config.json');
 const { Client, RichEmbed } = require('discord.js');
 const client = new Client({ disableEveryone: true });
-client.login(botToken.token);
+client.login(process.env.TOKEN);
 
 client.on("ready", function(){
   client.user.setGame(`${prefix}help`);
