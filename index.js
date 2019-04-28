@@ -1,9 +1,10 @@
 const botprefix = require('./config.json');
 const prefix = (botprefix.prefix);
 const Discord = require('discord.js');
+const botToken = require('./config.json');
 const { Client, RichEmbed } = require('discord.js');
 const client = new Client({ disableEveryone: true });
-client.login(process.env.TOKEN);
+client.login(botToken.token);
 
 client.on("ready", function(){
   client.user.setGame(`${prefix}help`);
@@ -65,7 +66,7 @@ client.on("message", async message => {
   }
   
   if(command === "kick") {
-    if(!message.member.roles.some(r=>["⚒️Staff"].includes(r.name)) )
+    if(!message.member.roles.some(r=>["🛠️Staff"].includes(r.name)) )
       return message.reply("Tu n'a pas la permission !");
     
     let member = message.mentions.members.first() || message.guild.members.get(args[0]);
@@ -83,7 +84,7 @@ client.on("message", async message => {
   }
   
   if(command === "ban") {
-    if(!message.member.roles.some(r=>["⚒️Staff"].includes(r.name)) )
+    if(!message.member.roles.some(r=>["🛠️Staff"].includes(r.name)) )
       return message.reply("Tu n'a pas la permission !");
     
     let member = message.mentions.members.first();
@@ -101,7 +102,7 @@ client.on("message", async message => {
   }
 
 if(command === "clear") {
-  if(!message.member.roles.some(r=>["⚒️Staff"].includes(r.name)) )
+  if(!message.member.roles.some(r=>["🛠️Staff"].includes(r.name)) )
     return message.reply("tu n'a pas la permission !");
   
     const deleteCount = parseInt(args[0], 10);
@@ -134,7 +135,7 @@ client.on('message', message => {
   if (message.content.startsWith(hugcommand)) {
     if(message.mentions.members.size == 1) {
       let member = message.mentions.members.first()
-        message.channel.send(`${member} tu a reçu un câlin de ${message.author}`, {
+        message.channel.send(`${member} tu as reçu un câlin de ${message.author}`, {
           file: rando_imgs[Math.floor(Math.random() * rando_imgs.length - 1 * 1) + 1]
         });
     }
@@ -163,7 +164,7 @@ client.on('message', message => {
     if (message.content.startsWith(kisscommand)) {
       if(message.mentions.members.size == 1) {
         let member = message.mentions.members.first()
-          message.channel.send(`${member} tu a reçu un bisous de ${message.author}`, {
+          message.channel.send(`${member} tu as reçu un bisou de ${message.author}`, {
             file: kiss[Math.floor(Math.random() * kiss.length - 1 * 1) + 1]
           });
       }
@@ -194,7 +195,7 @@ client.on('message', message => {
 })
 
 //lvl section
-const config = require('./config.json');
+/*const config = require('./config.json');
 const fs = require("fs");
 let db = JSON.parse(fs.readFileSync("./database.json", "utf8"));
 
@@ -224,7 +225,7 @@ client.on("message", message => {
         if(!member) return message.channel.sendEmbed(embed)
         let memberInfo = db[member.id]
         let embed2 = new Discord.RichEmbed()
-        .setTitle(`Niveau de squatteur de ${message.author.username}`)
+        .setTitle(`Niveau de squatteur de ${member}`)
         .setColor(0xff0000)
         .addField("Level", memberInfo.level)
         .addField("XP", memberInfo.xp+"/100")
@@ -233,7 +234,7 @@ client.on("message", message => {
     fs.writeFile("./database.json", JSON.stringify(db), (x) => {
         if (x) console.error(x)
       });
-});
+});*/
 
 client.on("message", message => {
   if(message.content.startsWith(prefix + "pileouface")) {
@@ -272,12 +273,14 @@ client.on('message', (message) => {
   const goulagcommand = prefix + 'gogoulag'
 
   if(message.content.startsWith(goulagcommand)){
-    if(!message.member.roles.some(r=>["⚒️Staff"].includes(r.name)) )
+    if(!message.member.roles.some(r=>["🛠️Staff"].includes(r.name)) )
       return message.reply("Tu n'a pas la permission !");
 
-    let role = message.guild.roles.find(r => r.name === "🛂 𝚂𝚎́𝚓𝚘𝚞𝚛𝚗𝚎 𝚍𝚊𝚗𝚜 𝚕𝚎 𝙶𝚘𝚞𝚕𝚊𝚐");
+    let role = message.guild.roles.find(r => r.name === "🛂Séjourne au goulag");
+    let crole = message.guild.roles.find(r => r.name === "👤Citoyen");
     let member = message.mentions.members.first();
     member.addRole(role).catch(console.error);
+    member.removeRole(crole).catch(console.error);
       return message.channel.send(`${member} à été envoyer au goulag par ${message.author}`)
   }
 });
@@ -286,12 +289,131 @@ client.on('message', (message) => {
   const exitgoulagcommand = prefix + 'exitgoulag'
 
   if(message.content.startsWith(exitgoulagcommand)){
-    if(!message.member.roles.some(r=>["⚒️Staff"].includes(r.name)) )
+    if(!message.member.roles.some(r=>["🛠️Staff"].includes(r.name)) )
       return message.reply("Tu n'a pas la permission !");
 
-    let role = message.guild.roles.find(r => r.name === "🛂 𝚂𝚎́𝚓𝚘𝚞𝚛𝚗𝚎 𝚍𝚊𝚗𝚜 𝚕𝚎 𝙶𝚘𝚞𝚕𝚊𝚐");
+    let role = message.guild.roles.find(r => r.name === "🛂Séjourne au goulag");
+    let crole = message.guild.roles.find(r => r.name === "👤Citoyen");
     let member = message.mentions.members.first();
     member.removeRole(role).catch(console.error);
+    member.addRole(crole).catch(console.error);
       return message.channel.send(`${member} à été sortit du goulag par ${message.author}`)
   }
+});
+
+const yourID = "560182971173175306";
+const setupCMD = `${prefix}rolemenu`
+const initialMessage = `**Réagis au message pour accéder aux channels !**`;
+const embedMessage = `
+**Réagis à ce message avec l'émoji :**
+`;
+const embedFooter = "Russian World";
+const roles = ["👤Citoyen"];
+const reactions = ["✅"];
+const embed = true;
+const embedColor = "#ff0000";
+
+if (roles.length !== reactions.length) throw "Mauvais paramètres !";
+
+function generateMessages() {
+    let messages = [];
+    for (let role of roles) messages.push(`Réagis pour obtenir le role **"${role}"** !`);
+    return messages;
+}
+
+function generateEmbedFields() {
+    return roles.map((r, e) => {
+        return {
+            emoji: reactions[e],
+            role: r
+        };
+    });
+}
+
+client.on("message", message => {
+    if (message.author.id == yourID && message.content.toLowerCase() == setupCMD) {
+
+        if (!embed) {
+            message.channel.send(initialMessage);
+
+            const toSend = generateMessages();
+            toSend.forEach((role, react) => {
+                message.channel.send(role).then(m => {
+                    m.react(reactions[react]);
+                });
+            });
+        } else {
+            const roleEmbed = new RichEmbed()
+                .setDescription(embedMessage)
+                .setFooter(embedFooter);
+
+            if (embedColor) roleEmbed.setColor(embedColor);
+
+            const fields = generateEmbedFields();
+            for (const f of fields) roleEmbed.addField(f.emoji, f.role, true);
+
+            message.channel.send(roleEmbed).then(async m => {
+                for (let r of reactions) await m.react(r);
+            });
+        }
+    }
+});
+
+const events = {
+	MESSAGE_REACTION_ADD: 'messageReactionAdd',
+	MESSAGE_REACTION_REMOVE: 'messageReactionRemove',
+};
+
+client.on('raw', async event => {
+
+    if (!events.hasOwnProperty(event.t)) return;
+
+    const { d: data } = event;
+    const user = client.users.get(data.user_id);
+    const channel = client.channels.get(data.channel_id);
+
+    const message = await channel.fetchMessage(data.message_id);
+    const member = message.guild.members.get(user.id);
+
+    const emojiKey = (data.emoji.id) ? `${data.emoji.name}:${data.emoji.id}` : data.emoji.name;
+    const reaction = message.reactions.get(emojiKey);
+
+    let embedFooterText;
+    if (message.embeds[0]) embedFooterText = message.embeds[0].footer.text;
+
+    if (message.author.id === client.user.id && (message.content !== initialMessage || (message.embeds[0] && (embedFooterText !== embedFooter)))) {
+
+        if (!embed) {
+            const re = `\\*\\*"(.+)?(?="\\*\\*)`;
+            const role = message.content.match(re)[1];
+
+            if (member.id !== client.user.id) {
+                const roleObj = message.guild.roles.find(r => r.name === role);
+
+                if (event.t === "MESSAGE_REACTION_ADD") {
+                    member.addRole(roleObj.id);
+                } else {
+                    member.removeRole(roleObj.id);
+                }
+            }
+        } else {
+            const fields = message.embeds[0].fields;
+
+            for (let i = 0; i < fields.length; i++) {
+                if (member.id !== client.user.id) {
+                    const role = message.guild.roles.find(r => r.name === fields[i].value);
+
+                    if (fields[i].name === reaction.emoji.name) {
+                        if (event.t === "MESSAGE_REACTION_ADD") {
+                            member.addRole(role.id);
+                            break;
+                        } else {
+                            member.removeRole(role.id);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
 });
