@@ -302,7 +302,7 @@ const embedMessage = `
 **Réagis à ce message avec l'émoji :**
 `;
 const embedFooter = "Russian World";
-const roles = ["👤Citoyen"];
+const roles = ["▪👤Citoyen▪"];
 const reactions = ["✅"];
 const embed = true;
 const embedColor = "#ff0000";
