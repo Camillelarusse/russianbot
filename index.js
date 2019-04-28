@@ -1,9 +1,10 @@
 const botprefix = require('./config.json');
 const prefix = (botprefix.prefix);
 const Discord = require('discord.js');
+const botToken = require('./config.json');
 const { Client, RichEmbed } = require('discord.js');
 const client = new Client({ disableEveryone: true });
-client.login(precess.env.TOKEN);
+client.login(botToken.token);
 
 client.on("ready", function(){
   client.user.setGame(`${prefix}help`);
@@ -52,65 +53,60 @@ client.on('message', message => {
 
 //bot 2
 client.on("message", async message => {
-    const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
-    const command = args.shift().toLowerCase();
+  const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
+  const command = args.shift().toLowerCase();
 
-  if(message.author.bot) return;
-  
-  if(message.content.indexOf(config.prefix) !== 0) return;
-  
-  if(command === "lantence") {
-    const m = await message.channel.send("Ping?");
-    m.edit(`Pong! La latence est de ${m.createdTimestamp - message.createdTimestamp}ms. La latence de l'API est de ${Math.round(client.ping)}ms`);
-  }
-  
-  if(command === "kick") {
-    if(!message.member.roles.some(r=>["🛠️Staff"].includes(r.name)) )
-      return message.reply("Tu n'a pas la permission !");
-    
-    let member = message.mentions.members.first() || message.guild.members.get(args[0]);
-    if(!member)
-      return message.reply("Mentionnez un membre valide !");
-    if(!member.kickable) 
-      return message.reply("Je ne peut pas le ban car tu n'a pas la permission !");
-    
-    let reason = args.slice(1).join(' ');
-    if(!reason) reason = "Pas de raison";
-    
-    await member.kick(reason)
-      .catch(error => message.reply(`${message.author}, je ne peut pas le ban car : ${error}`));
-    message.reply(`${member.user.tag} a été kick par ${message.author.tag} pour: ${reason}`);
-  }
-  
-  if(command === "ban") {
-    if(!message.member.roles.some(r=>["🛠️Staff"].includes(r.name)) )
-      return message.reply("Tu n'a pas la permission !");
-    
-    let member = message.mentions.members.first();
-    if(!member)
-      return message.reply("Mentionnez un membre valide !");
-    if(!member.bannable) 
-      return message.reply("Je ne peut pas le ban car tu n'a pas la permission !");
+if(message.author.bot) return;
 
-    let reason = args.slice(1).join(' ');
-    if(!reason) reason = "Pas de raison";
-    
-    await member.ban(reason)
-      .catch(error => message.reply(`${message.author}, je ne peut pas le ban car : ${error}`));
-    message.reply(`${member.user.tag} à été ban par ${message.author.tag} pour: ${reason}`);
-  }
+if(message.content.indexOf(config.prefix) !== 0) return;
+
+if(command === "kick") {
+  if(!message.member.roles.some(r=>["🛠️Staff"].includes(r.name)) )
+    return message.reply("Vous n'avez pas la permission !");
+  
+  let member = message.mentions.members.first() || message.guild.members.get(args[0]);
+  if(!member)
+    return message.reply("Mentionnez un membre valide !");
+  if(!member.kickable) 
+    return message.reply("Je ne peut pas le ban car vous n'avez pas la permission !");
+  
+  let reason = args.slice(1).join(' ');
+  if(!reason) reason = "Pas de raison";
+  
+  await member.kick(reason)
+    .catch(error => message.reply(`${message.author}, je ne peut pas le ban car : ${error}`));
+  message.reply(`${member.user.tag} a été kick par ${message.author.tag} pour: ${reason}`);
+}
+
+if(command === "ban") {
+  if(!message.member.roles.some(r=>["🛠️Staff"].includes(r.name)) )
+    return message.reply("Vous n'avez pas la permission !");
+  
+  let member = message.mentions.members.first();
+  if(!member)
+    return message.reply("Mentionnez un membre valide !");
+  if(!member.bannable) 
+    return message.reply("Je ne peut pas le ban car vous n'avez pas la permission !");
+
+  let reason = args.slice(1).join(' ');
+  if(!reason) reason = "Pas de raison";
+  
+  await member.ban(reason)
+    .catch(error => message.reply(`${message.author}, je ne peut pas le ban car : ${error}`));
+  message.reply(`${member.user.tag} à été ban par ${message.author.tag} pour: ${reason}`);
+}
 
 if(command === "clear") {
-  if(!message.member.roles.some(r=>["🛠️Staff"].includes(r.name)) )
-    return message.reply("tu n'a pas la permission !");
-  
-    const deleteCount = parseInt(args[0], 10);
-    if(!deleteCount || deleteCount < 2 || deleteCount > 100)
-      return message.reply("Combien de messages veux-tu supprimer");
-    const fetched = await message.channel.fetchMessages({limit: deleteCount});
-    message.channel.bulkDelete(fetched)
-      .catch(error => message.reply(`Impossible de supprimer les messages car : ${error}`));
-  }
+if(!message.member.roles.some(r=>["🛠️Staff"].includes(r.name)) )
+  return message.reply("Vous n'avez pas la permission !");
+
+  const deleteCount = parseInt(args[0], 10);
+  if(!deleteCount || deleteCount < 2 || deleteCount > 100)
+    return message.reply("Combien de messages voulez vous supprimer");
+  const fetched = await message.channel.fetchMessages({limit: deleteCount});
+  message.channel.bulkDelete(fetched)
+    .catch(error => message.reply(`Impossible de supprimer les messages car : ${error}`));
+}
 });
 
 const hugcommand = prefix + 'hug'
