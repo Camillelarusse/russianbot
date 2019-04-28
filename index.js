@@ -60,7 +60,7 @@ if(message.author.bot) return;
 if(message.content.indexOf(config.prefix) !== 0) return;
 
 if(command === "kick") {
-  if(!message.member.roles.some(r=>["🛠️Staff"].includes(r.name)) )
+  if(!message.member.roles.some(r=>["▪🛠️Staff▪"].includes(r.name)) )
     return message.reply("Vous n'avez pas la permission !");
   
   let member = message.mentions.members.first() || message.guild.members.get(args[0]);
@@ -78,7 +78,7 @@ if(command === "kick") {
 }
 
 if(command === "ban") {
-  if(!message.member.roles.some(r=>["🛠️Staff"].includes(r.name)) )
+  if(!message.member.roles.some(r=>["▪🛠️Staff▪"].includes(r.name)) )
     return message.reply("Vous n'avez pas la permission !");
   
   let member = message.mentions.members.first();
@@ -96,7 +96,7 @@ if(command === "ban") {
 }
 
 if(command === "clear") {
-if(!message.member.roles.some(r=>["🛠️Staff"].includes(r.name)) )
+if(!message.member.roles.some(r=>["▪🛠️Staff▪"].includes(r.name)) )
   return message.reply("Vous n'avez pas la permission !");
 
   const deleteCount = parseInt(args[0], 10);
@@ -270,8 +270,8 @@ client.on('message', (message) => {
     if(!message.member.roles.some(r=>["🛠️Staff"].includes(r.name)) )
       return message.reply("Tu n'a pas la permission !");
 
-    let role = message.guild.roles.find(r => r.name === "🛂Séjourne au goulag");
-    let crole = message.guild.roles.find(r => r.name === "👤Citoyen");
+    let role = message.guild.roles.find(r => r.name === "▪🛂Séjourne au goulag▪");
+    let crole = message.guild.roles.find(r => r.name === "▪👤Citoyen▪");
     let member = message.mentions.members.first();
     member.addRole(role).catch(console.error);
     member.removeRole(crole).catch(console.error);
@@ -286,8 +286,8 @@ client.on('message', (message) => {
     if(!message.member.roles.some(r=>["🛠️Staff"].includes(r.name)) )
       return message.reply("Tu n'a pas la permission !");
 
-    let role = message.guild.roles.find(r => r.name === "🛂Séjourne au goulag");
-    let crole = message.guild.roles.find(r => r.name === "👤Citoyen");
+    let role = message.guild.roles.find(r => r.name === "▪🛂Séjourne au goulag▪");
+    let crole = message.guild.roles.find(r => r.name === "▪👤Citoyen▪");
     let member = message.mentions.members.first();
     member.removeRole(role).catch(console.error);
     member.addRole(crole).catch(console.error);
