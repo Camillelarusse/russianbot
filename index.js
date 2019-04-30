@@ -3,7 +3,7 @@ const prefix = (botprefix.prefix);
 const Discord = require('discord.js');
 const { Client, RichEmbed } = require('discord.js');
 const client = new Client({ disableEveryone: true });
-/*client.login(process.env.TOKEN);*/
+client.login(process.env.TOKEN);
 
 client.on("ready", function(){
   client.user.setGame(`${prefix}help`);
